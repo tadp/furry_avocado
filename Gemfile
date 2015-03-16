@@ -10,7 +10,11 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
+gem 'haml-rails'
 gem 'bcrypt'
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-github'
 
 group :development, :test do
   gem 'rspec-rails'
