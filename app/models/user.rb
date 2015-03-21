@@ -5,6 +5,12 @@ class User < ActiveRecord::Base
   validates :email, :session_token, uniqueness: true
   validates :password, length: { minimum: 8, allow_nil: true }
 
+  has_many(
+    :questions,
+    class_name: 'Question',
+    foreign_key: :author_id
+  )
+
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create(password)
