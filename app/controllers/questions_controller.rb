@@ -6,8 +6,12 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-    @question.vote_rating = 0
+    @question = current_user.questions.new(
+      question_params.merge({
+        vote_rating: 0,
+        view_count: 0
+      })
+    )
 
     if @question.save
       redirect_to question_url(@question)
@@ -18,15 +22,11 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find(params[:id])
+    @question.view_count += 1
+    @question.save
   end
 
   private
-
-  def ensure_current_user
-    unless signed_in?
-      redirect_to new_session_url
-    end
-  end
 
   def question_params
     params.require(:question).permit(:title, :body)
