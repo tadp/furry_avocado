@@ -1,0 +1,4 @@
+class TagAssignmentsController < ActionController
+
+
+end

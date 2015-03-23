@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321024327) do
+ActiveRecord::Schema.define(version: 20150321071901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,12 +29,6 @@ ActiveRecord::Schema.define(version: 20150321024327) do
   add_index "questions", ["view_count"], name: "index_questions_on_view_count", using: :btree
   add_index "questions", ["vote_rating"], name: "index_questions_on_vote_rating", using: :btree
 
-  create_table "tags", force: true do |t|
-    t.string "content", null: false
-  end
-
-  add_index "tags", ["content"], name: "index_tags_on_content", unique: true, using: :btree
-
   create_table "users", force: true do |t|
     t.string "name",            null: false
     t.string "email",           null: false
@@ -44,5 +38,15 @@ ActiveRecord::Schema.define(version: 20150321024327) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["session_token"], name: "index_users_on_session_token", unique: true, using: :btree
+
+  create_table "votes", force: true do |t|
+    t.integer "question_id", null: false
+    t.integer "voter_id",    null: false
+    t.boolean "up?",         null: false
+  end
+
+  add_index "votes", ["question_id", "voter_id"], name: "index_votes_on_question_id_and_voter_id", unique: true, using: :btree
+  add_index "votes", ["question_id"], name: "index_votes_on_question_id", using: :btree
+  add_index "votes", ["voter_id"], name: "index_votes_on_voter_id", using: :btree
 
 end

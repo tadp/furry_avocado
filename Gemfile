@@ -15,6 +15,8 @@ gem 'bcrypt'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'better_errors'
+gem 'binding_of_caller'
 
 group :development, :test do
   gem 'rspec-rails'

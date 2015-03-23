@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  validates :title, :body, :author_id, :vote_rating, presence: true
+  validates :title, :body, :author_id, :vote_rating, :view_count, presence: true
 
   belongs_to(
     :author,
@@ -7,5 +7,6 @@ class Question < ActiveRecord::Base
     foreign_key: :author_id
   )
 
-  has_many :tags
+  has_many :votes
+  has_many :voters, through: :votes, source: :voter
 end

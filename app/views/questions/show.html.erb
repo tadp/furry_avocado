@@ -2,3 +2,8 @@
 <p><%= @question.body %></p>
 
 <%= @question.view_count %>
+
+Vote Rating: <%= @question.vote_rating %>
+
+<%= link_to "Upvote", votes_url(up?: true, question_id: @question), method: :post %>
+<%= link_to "Downvote", votes_url(up?: false, question_id: @question), method: :post %>
