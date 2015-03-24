@@ -1,6 +1,6 @@
 class Vote < ActiveRecord::Base
-  validates :question_id, :voter_id, presence: true
-  validates_uniqueness_of :question_id, scope: :voter_id
+  validates :voteable_id, :voteable_type, :voter_id, presence: true
+  validates :voteable_id, uniqueness: { scope: [:voteable_type, :voter_id] }
   validates :up?, inclusion: { in: [true, false] }
 
   belongs_to(
@@ -9,5 +9,5 @@ class Vote < ActiveRecord::Base
     foreign_key: :voter_id
   )
 
-  belongs_to :question
+  belongs_to :voteable, polymorphic: true
 end

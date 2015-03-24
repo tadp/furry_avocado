@@ -5,5 +5,5 @@
 
 Vote Rating: <%= @question.vote_rating %>
 
-<%= link_to "Upvote", votes_url(up?: true, question_id: @question), method: :post %>
-<%= link_to "Downvote", votes_url(up?: false, question_id: @question), method: :post %>
+<%= link_to "Upvote", votes_url(up?: true, voteable_id: @question, voteable_type: "Question"), method: :post %>
+<%= link_to "Downvote", votes_url(up?: false, voteable_id: @question, voteable_type: "Question"), method: :post %>

@@ -5,13 +5,14 @@ class CreateTagsAndTagAssignments < ActiveRecord::Migration
     end
 
     create_table :tag_assignments do |t|
-      t.integer :question_id, null: false
+      t.integer :taggable_id, null: false
+      t.string :taggable_type, null: false
       t.integer :tag_id, null: false
     end
 
     add_index :tags, :name, unique: true
-    add_index :tag_assignmentss, :question_id
-    add_index :tag_assignmentss, :tag_id
-    add_index :tag_assignmentss, [:question_id, :tag_id], unique: true
+    add_index :tag_assignments, :taggable_id
+    add_index :tag_assignments, :tag_id
+    add_index :tag_assignments, [:taggable_id, :taggable_type, :tag_id], unique: true, name: "tag_assignments_on_taggable_id_and_taggable_type_and_tag_id"
   end
 end

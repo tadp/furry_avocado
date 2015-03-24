@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+    # 5.times { @question.tags.new }
   end
 
   def create
