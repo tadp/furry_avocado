@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(version: 20150323180139) do
   enable_extension "plpgsql"
 
   create_table "questions", force: true do |t|
-    t.integer "author_id",   null: false
-    t.string  "title",       null: false
+    t.integer "author_id",               null: false
+    t.string  "title",                   null: false
     t.text    "body"
-    t.integer "vote_rating", null: false
-    t.integer "view_count",  null: false
+    t.integer "vote_rating", default: 0, null: false
+    t.integer "view_count",  default: 0, null: false
   end
 
   add_index "questions", ["author_id"], name: "index_questions_on_author_id", using: :btree

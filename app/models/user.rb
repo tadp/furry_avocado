@@ -25,10 +25,8 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_credentials(email, password)
-    user = self.find_by_email(email)
-    return nil if user.nil?
-    return user if user.is_password?(password)
-    nil
+    user = find_by_email(email)
+    user && user.is_password?(password) ? user : nil
   end
 
   def reset_session_token!

@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     @user = User.find_by_credentials(session_params[:email], session_params[:password])
 
     if @user
-      sign_in!(@user)
+      sign_in(@user)
       redirect_to user_url(@user)
     else
       render :new
@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    sign_out!(current_user)
+    sign_out(current_user)
     redirect_to new_session_url
   end
 

@@ -4,8 +4,8 @@ class CreateQuestions < ActiveRecord::Migration
       t.integer :author_id, null: false
       t.string :title, null: false
       t.text :body
-      t.integer :vote_rating, null: false
-      t.integer :view_count, null: false
+      t.integer :vote_rating, null: false, default: 0
+      t.integer :view_count, null: false, default: 0
     end
 
     add_index :questions, :author_id
