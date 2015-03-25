@@ -19,7 +19,7 @@ class VotesController < ApplicationController
   private
 
   def vote_params
-    { voter_id: current_user.id, voteable_id: params[:voteable_id], voteable_type: params[:voteable_type], up?: params[:up?] }
+    { voter_id: current_user, voteable_id: params[:voteable_id], voteable_type: params[:voteable_type], up?: params[:up?] }
   end
 
   def alter_vote_rating

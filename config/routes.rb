@@ -3,6 +3,6 @@ Rails.application.routes.draw do
   resource :session, only: [:create, :destroy, :new]
   resources :questions, only: [:create, :new, :show]
   resources :votes, only: [:create]
-  resources :tags, only: [:create]
+  resources :tags, only: [:show]
   resources :tag_assignments, only: [:create, :destroy]
 end

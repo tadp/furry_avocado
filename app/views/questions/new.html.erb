@@ -3,12 +3,9 @@
   <%= f.text_field :title, placeholder: "What's your question?" %>
   <%= f.label :body %>
   <%= f.text_area :body %>
-<!--   <%= f.fields_for :tags do |tag_f| %>
-    <br>
-    <%= tag_f.label :name %>
-    <%= tag_f.text_field :name %>
-  <% end %> -->
 
-  
+  <%= f.label :tag_names %>
+  <%= f.text_field :tag_names, value: '' %>
+
   <%= f.submit 'Post Your Question' %>
 <% end %>

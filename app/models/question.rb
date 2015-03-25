@@ -10,7 +10,6 @@ class Question < ActiveRecord::Base
   has_many :votes, as: :voteable
   has_many :voters, through: :votes, source: :voter
 
-  has_many :tag_assignments
+  has_many :tag_assignments, as: :taggable
   has_many :tags, through: :tag_assignments, source: :tag
-  # accepts_nested_attributes_for :tags
 end

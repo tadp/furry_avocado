@@ -1,9 +1,29 @@
 <h1><%= @question.title %></h1>
 <p><%= @question.body %></p>
 
-<%= @question.view_count %>
+Views: <%= @question.view_count %>
 
-Vote Rating: <%= @question.vote_rating %>
+<br>
 
 <%= link_to "Upvote", votes_url(up?: true, voteable_id: @question, voteable_type: "Question"), method: :post %>
 <%= link_to "Downvote", votes_url(up?: false, voteable_id: @question, voteable_type: "Question"), method: :post %>
+
+Vote Rating: <%= @question.vote_rating %>
+
+<br>
+
+Tags:
+
+<ul>
+  <% @question.tag_assignments.each do |tag_assignment| %>
+    <li><%= link_to tag_assignment.tag.name, tag_url(tag_assignment.tag) %> <%= link_to "Remove", tag_assignment_url(tag_assignment), method: :delete %></li>
+  <% end %>
+</ul>
+
+<% if @question.tag_assignments.length < 5 %>
+  <%= form_tag(tag_assignments_url(tag_assignment: { taggable_id: @question, taggable_type: "Question" }), method: "post") do %>
+    <%= label_tag :question_tag_names, "Tag Name" %>
+    <%= text_field :question, :tag_names, value: "" %>
+    <%= submit_tag("Add Tag") %>
+  <% end %>
+<% end %>

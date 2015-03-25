@@ -3,7 +3,6 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-    # 5.times { @question.tags.new }
   end
 
   def create
@@ -15,6 +14,7 @@ class QuestionsController < ApplicationController
     )
 
     if @question.save
+      find_or_create_tags_and_tag_assignments
       redirect_to question_url(@question)
     else
       render :new
@@ -22,7 +22,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find(params[:id])
+    @question = Question.includes(:tags, :tag_assignments).find(params[:id])
     @question.view_count += 1
     @question.save
   end
@@ -31,5 +31,15 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body)
+  end
+
+  def find_or_create_tags_and_tag_assignments
+    tag_names = params[:question][:tag_names].split(' ')
+
+    5.times do |num|
+      break if num == tag_names.length
+      tag = Tag.find_or_create_by(name: tag_names[num])
+      TagAssignment.create(tag_id: tag.id, taggable_id: @question.id, taggable_type: "Question")
+    end
   end
 end
