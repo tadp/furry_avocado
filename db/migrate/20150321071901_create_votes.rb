@@ -4,7 +4,7 @@ class CreateVotes < ActiveRecord::Migration
       t.integer :voteable_id, null: false
       t.string :voteable_type, null: false
       t.integer :voter_id, null: false
-      t.boolean :up?, null: false
+      t.boolean :upvoted?, null: false
     end
 
     add_index :votes, :voteable_id

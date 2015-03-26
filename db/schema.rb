@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20150323180139) do
     t.integer "voteable_id",   null: false
     t.string  "voteable_type", null: false
     t.integer "voter_id",      null: false
-    t.boolean "up?",           null: false
+    t.boolean "upvoted?",      null: false
   end
 
   add_index "votes", ["voteable_id", "voteable_type", "voter_id"], name: "index_votes_on_voteable_id_and_voteable_type_and_voter_id", unique: true, using: :btree

@@ -1,27 +1,25 @@
 <h1><%= @question.title %></h1>
 <p><%= @question.body %></p>
 
-Views: <%= @question.view_count %>
+Vote Rating: <%= @question.upvoters.length - @question.downvoters.length %>
 
 <br>
 
-<%= link_to "Upvote", votes_url(up?: true, voteable_id: @question, voteable_type: "Question"), method: :post %>
-<%= link_to "Downvote", votes_url(up?: false, voteable_id: @question, voteable_type: "Question"), method: :post %>
-
-Vote Rating: <%= @question.vote_rating %>
+<%= link_to "Upvote", vote_question_url(question: { upvoted?: true }), method: :post %>
+<%= link_to "Downvote", vote_question_url(question: { upvoted?: false }), method: :post %>
 
 <br>
 
 Tags:
 
 <ul>
-  <% @question.tag_assignments.each do |tag_assignment| %>
-    <li><%= link_to tag_assignment.tag.name, tag_url(tag_assignment.tag) %> <%= link_to "Remove", tag_assignment_url(tag_assignment), method: :delete %></li>
+  <% @question.tags.each do |tag| %>
+    <li><%= link_to tag.name, tag_url(tag) %> <%= link_to "Remove", destroy_tag_assignment_question_url(question: { tag_id: tag }), method: :delete %></li>
   <% end %>
 </ul>
 
-<% if @question.tag_assignments.length < 5 %>
-  <%= form_tag(tag_assignments_url(tag_assignment: { taggable_id: @question, taggable_type: "Question" }), method: "post") do %>
+<% if @question.tags.length < 5 %>
+  <%= form_tag(create_tags_question_url, method: :post) do %>
     <%= label_tag :question_tag_names, "Tag Name" %>
     <%= text_field :question, :tag_names, value: "" %>
     <%= submit_tag("Add Tag") %>
