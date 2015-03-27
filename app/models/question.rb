@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  validates :title, :body, :author_id, :vote_rating, :view_count, presence: true
+  validates :title, :body, :author_id, presence: true
 
   belongs_to(
     :author,
@@ -8,18 +8,21 @@ class Question < ActiveRecord::Base
   )
 
   has_many :votes, as: :voteable
-
   has_many :upvoters, -> { where votes: { upvoted?: true } }, through: :votes, source: :voter
   has_many :downvoters, -> { where votes: { upvoted?: false } }, through: :votes, source: :voter
-
   has_many :tag_assignments, as: :taggable
   has_many :tags, through: :tag_assignments, source: :tag
+  has_many :responses
 
-  def upvotes
-    votes.where(upvoted?: true)
+  def limit_tags
+    errors.add(:tags, 'The question already contains 5 tags') if tags.length == 5
   end
 
-  def downvotes
-    votes.where(upvoted?: false)
-  end
+  # def upvotes
+  #   votes.where(upvoted?: true)
+  # end
+
+  # def downvotes
+  #   votes.where(upvoted?: false)
+  # end
 end

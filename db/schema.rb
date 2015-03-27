@@ -11,23 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150323180139) do
+ActiveRecord::Schema.define(version: 20150326222518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "questions", force: true do |t|
-    t.integer "author_id",               null: false
-    t.string  "title",                   null: false
+    t.integer "author_id", null: false
+    t.string  "title",     null: false
     t.text    "body"
-    t.integer "vote_rating", default: 0, null: false
-    t.integer "view_count",  default: 0, null: false
   end
 
   add_index "questions", ["author_id"], name: "index_questions_on_author_id", using: :btree
   add_index "questions", ["title"], name: "index_questions_on_title", using: :btree
-  add_index "questions", ["view_count"], name: "index_questions_on_view_count", using: :btree
-  add_index "questions", ["vote_rating"], name: "index_questions_on_vote_rating", using: :btree
+
+  create_table "responses", force: true do |t|
+    t.integer "author_id",   null: false
+    t.integer "question_id", null: false
+    t.text    "body"
+  end
+
+  add_index "responses", ["author_id"], name: "index_responses_on_author_id", using: :btree
+  add_index "responses", ["question_id"], name: "index_responses_on_question_id", using: :btree
 
   create_table "tag_assignments", force: true do |t|
     t.integer "taggable_id",   null: false
