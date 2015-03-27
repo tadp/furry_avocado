@@ -14,6 +14,8 @@ class Question < ActiveRecord::Base
   has_many :tags, through: :tag_assignments, source: :tag
   has_many :responses
 
+  validates_associated :tag_assignments, :length => { :maximum => 5}
+
   def limit_tags
     errors.add(:tags, 'The question already contains 5 tags') if tags.length == 5
   end
