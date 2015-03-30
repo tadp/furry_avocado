@@ -13,12 +13,13 @@ class Question < ActiveRecord::Base
   has_many :tag_assignments, as: :taggable
   has_many :tags, through: :tag_assignments, source: :tag
   has_many :responses
+  has_one :accepted_response, -> { where responses: { accepted: true } }, class_name: 'Response', foreign_key: :question_id
 
-  validates_associated :tag_assignments, :length => { :maximum => 5}
+  # validates_associated :tag_assignments, :length => { :maximum => 5}
 
-  def limit_tags
-    errors.add(:tags, 'The question already contains 5 tags') if tags.length == 5
-  end
+  # def limit_tags
+  #   errors.add(:tags, 'The question already contains 5 tags') if tags.length == 5
+  # end
 
   # def upvotes
   #   votes.where(upvoted?: true)
