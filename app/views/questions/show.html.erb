@@ -5,8 +5,8 @@ Vote Rating: <%= @question.upvoters.length - @question.downvoters.length %>
 
 <br>
 
-<%= link_to "Upvote", question_votes_url(@question, voteable_type: 'Question', vote: { upvoted?: true }), method: :post %>
-<%= link_to "Downvote", question_votes_url(@question, voteable_type: 'Question', vote: { upvoted?: false }), method: :post %>
+<%= link_to "Upvote", create_vote_question_url(@question, vote: { upvoted: true }), method: :post %>
+<%= link_to "Downvote", create_vote_question_url(@question, vote: { upvoted: false }), method: :post %>
 
 <br>
 
@@ -14,12 +14,12 @@ Tags:
 
 <ul>
   <% @question.tags.each do |tag| %>
-    <li><%= link_to tag.name, tag_url(tag) %> <%= link_to "Remove", question_tag_url(@question, tag, taggable_type: 'Question'), method: :delete %></li>
+    <li><%= link_to tag.name, tag_url(tag) %> <%= link_to "Remove", destroy_tag_question_url(@question, tag_id: tag), method: :delete %></li>
   <% end %>
 </ul>
 
 <% if @question.tags.length < 5 %>
-  <%= form_tag(question_tags_url(@question, taggable_type: 'Question'), method: :post) do %>
+  <%= form_tag(create_tags_question_url(@question), method: :post) do %>
     <%= label_tag :tag_tag_names, "Tag Name" %>
     <%= text_field :tag, :tag_names %>
     <%= submit_tag("Add Tag") %>
@@ -32,7 +32,7 @@ Add a response:
 
   <%= form_tag(question_responses_url(@question), method: :post) do %>
     <%= text_area :response, :body, value: "" %>
-    <%= submit_tag("Add Tag") %>
+    <%= submit_tag("Add Response") %>
   <% end %>
 
 Responses:
@@ -42,8 +42,8 @@ Responses:
     <li>
       <%= response.upvoters.length - response.downvoters.length %>
 
-      <%= link_to "Upvote", question_response_votes_url(@question, response, vote: { upvoted?: true }), method: :post %>
-      <%= link_to "Downvote", question_response_votes_url(@question, response, vote: { upvoted?: false }), method: :post %>
+      <%= link_to "Upvote", create_vote_question_response_url(@question, response, vote: { upvoted: true }), method: :post %>
+      <%= link_to "Downvote", create_vote_question_response_url(@question, response, vote: { upvoted: false }), method: :post %>
 
       <br>
       <%= response.author.name %>

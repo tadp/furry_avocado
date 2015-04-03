@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)      not null
+#  email           :string(255)      not null
+#  password_digest :string(255)      not null
+#  session_token   :string(255)      not null
+#
+
 class User < ActiveRecord::Base
   before_validation :ensure_session_token
 

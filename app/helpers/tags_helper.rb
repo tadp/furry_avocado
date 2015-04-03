@@ -1,12 +1,12 @@
 module TagsHelper
   def create_or_assign_tags
     tag_names.each do |tag_name|
-      tag = Tag.find_by_name(tag_name)
+      @tag = Tag.find_by_name(tag_name)
 
-      if tag.nil?
+      if @tag.nil?
         @taggable.tags.create(name: tag_name)
       else
-        @taggable.tag_assignments.create(tag_id: tag.id)
+        @taggable.tag_assignments.create(tag_id: @tag.id)
       end
     end
   end

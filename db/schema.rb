@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330212311) do
+ActiveRecord::Schema.define(version: 20150402204735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: true do |t|
+    t.integer "commentable_id",   null: false
+    t.string  "commentable_type", null: false
+    t.integer "commenter_id",     null: false
+    t.text    "body",             null: false
+  end
+
+  add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
+  add_index "comments", ["commenter_id"], name: "index_comments_on_commenter_id", using: :btree
 
   create_table "posts", force: true do |t|
     t.string "title", null: false
@@ -40,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150330212311) do
     t.boolean "accepted",    default: false, null: false
   end
 
+  add_index "responses", ["accepted"], name: "index_responses_on_accepted", using: :btree
   add_index "responses", ["author_id"], name: "index_responses_on_author_id", using: :btree
   add_index "responses", ["question_id"], name: "index_responses_on_question_id", using: :btree
 
@@ -73,7 +84,7 @@ ActiveRecord::Schema.define(version: 20150330212311) do
     t.integer "voteable_id",   null: false
     t.string  "voteable_type", null: false
     t.integer "voter_id",      null: false
-    t.boolean "upvoted?",      null: false
+    t.boolean "upvoted",       null: false
   end
 
   add_index "votes", ["voteable_id", "voteable_type", "voter_id"], name: "index_votes_on_voteable_id_and_voteable_type_and_voter_id", unique: true, using: :btree
