@@ -7,10 +7,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<%= render "./navbar" %>
 <%= yield %>
 
 {{ 1 + 2 }}
 
+<%= render "./footer" %>
 </body>
 </html>

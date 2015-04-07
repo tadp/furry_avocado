@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.1.6'
+gem 'angularjs-rails'
 gem 'pg'
 gem 'bootstrap-sass'
 gem 'sass-rails', '~> 4.0.3'
@@ -17,7 +18,6 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'better_errors'
 gem 'binding_of_caller'
-gem 'bower-rails'
 gem 'annotate'
 
 group :development, :test do
