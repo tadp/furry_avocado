@@ -1,11 +1,16 @@
-<h1>Sign up, using:</h1>
+<div class='container'>
+  <h2 class='form-sign-heading'>Sign up, using:</h2>
 
-<%= form_for @user do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-  <%= f.submit 'Sign Up' %>
-<% end %>
+  <%= form_for @user, html: { class: 'form-sign' } do |f| %>
+    <%= f.label :name, class: 'sr-only' %>
+    <%= f.text_field :name, class: 'form-control', placeholder: 'Name' %>
+
+    <%= f.label :email, class: 'sr-only' %>
+    <%= f.text_field :email, class: 'form-control', placeholder: 'E-mail Address' %>
+
+    <%= f.label :password, class: 'sr-only' %>
+    <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
+    
+    <%= f.submit 'Sign Up', class: 'btn btn-md btn-primary btn-block' %>
+  <% end %>
+</div>

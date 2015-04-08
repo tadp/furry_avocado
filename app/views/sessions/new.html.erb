@@ -1,9 +1,11 @@
-<h1>Sign in, using:</h1>
+<div class='container'>
+  <h2 class='form-sign-heading'>Sign in, using:</h2>
 
-<%= form_tag(controller: 'sessions', action: 'create', method: 'post') do %>
-  <%= label_tag(:session_email, 'E-mail Address') %>
-  <%= text_field(:session, :email) %>
-  <%= label_tag(:session_password, 'Password') %>
-  <%= password_field(:session, :password) %>
-  <%= submit_tag('Sign In') %>
-<% end %>
+  <%= form_tag({ controller: 'sessions', action: 'create', method: 'post' }, { class: 'form-sign' }) do %>
+    <%= label_tag(:session_email, 'E-mail Address', class: 'sr-only') %>
+    <%= text_field(:session, :email, class: 'form-control', placeholder: 'E-mail Address') %>
+    <%= label_tag(:session_password, 'Password', class: 'sr-only') %>
+    <%= password_field(:session, :password, class: 'form-control', placeholder: 'Password') %>
+    <%= submit_tag('Sign In', class: 'btn btn-md btn-primary btn-block') %>
+  <% end %>
+</div>

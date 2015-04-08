@@ -1,0 +1,58 @@
+.vote {
+  display: inline-block;
+  width: 1.5em;
+  height: 6.5em;
+  text-align: center;
+
+  .vote-rating {
+    font-size: 1.5em;
+    display: inline;
+  }
+
+  .vote-arrow {
+    display: inline;
+  }
+}
+
+.question-body, .response-body {
+  display: inline-block;
+  vertical-align: top;
+
+  .question-text, .response-text {
+    display: inline;
+  }
+}
+
+.tag-list {
+  list-style: none;
+  height: 2.5em;
+  padding: 0;
+  display: block;
+
+  a {
+    color: white;
+    font-weight: normal;
+  }
+
+  & > li {
+    float: left;
+    font-size: 1.25em;
+  }
+
+  & > .tag-form {
+    font-size: 0.75em; 
+  }
+
+  .tag-remove-mark {
+    margin: 0em 0.1em;
+  }
+}
+
+.response-list {
+  list-style: none;
+  padding: 0;
+
+  & > li {
+    margin-bottom: 1.5em;
+  }
+}

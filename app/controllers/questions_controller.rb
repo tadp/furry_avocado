@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   include TagsHelper
 
-  before_action :ensure_current_user
+  before_action :ensure_current_user, except: [:index]
 
   def create
     @question = @taggable = current_user.questions.new(question_params)
@@ -14,12 +14,16 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def index
+    # @questions = Question.all
+  end
+
   def new
     @question = Question.new
   end
 
   def show
-    @question = Question.includes(:upvoters, :downvoters, :tags, :responses).find(params[:id])
+    @question = Question.includes(:author, :upvoters, :downvoters, :tags, :responses).find(params[:id])
   end
 
   def create_vote
