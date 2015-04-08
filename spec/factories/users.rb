@@ -1,24 +1,24 @@
 FactoryGirl.define do
   factory :another_valid_user, class: :user do
-    name 'Daniel Kim'
-    email 'danielkim@example.com'
-    password 'danielkim'
-    password_digest { BCrypt::Password.create('danielkim') }
+    name 'Bruce Wayne'
+    email 'brucewayne@example.com'
+    password 'brucewayne'
+    password_digest { BCrypt::Password.create('brucewayne') }
     session_token { SecureRandom::urlsafe_base64(16) }
   end
 
   factory :valid_user, class: :user do
-    name 'Charles Sleasman'
-    email 'charlessleasman@example.com'
-    password 'charlessleasman'
-    password_digest { BCrypt::Password.create('charlessleasman') }
+    name 'Charles Xavier'
+    email 'charlesxavier@example.com'
+    password 'charlesxavier'
+    password_digest { BCrypt::Password.create('charlesxavier') }
     session_token { SecureRandom::urlsafe_base64(16) }
   end
 
   factory :valid_user_attributes, class: :user do
-    name 'Charles Sleasman'
-    email 'charlessleasman@example.com'
-    password 'charlessleasman'
+    name 'Charles Xavier'
+    email 'charlesxavier@example.com'
+    password 'charlesxavier'
   end
 
   factory :invalid_user_attributes, class: :user do

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe User, type: :model do
+  it { should have_many(:questions) }
+
   describe '#password=' do
     context 'when given an input password' do
       let(:user) { User.new }
