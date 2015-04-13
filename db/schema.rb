@@ -17,22 +17,14 @@ ActiveRecord::Schema.define(version: 20150402204735) do
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
-    t.integer "commentable_id",   null: false
-    t.string  "commentable_type", null: false
+    t.integer "commentable_id"
+    t.string  "commentable_type"
     t.integer "commenter_id",     null: false
     t.text    "body",             null: false
   end
 
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["commenter_id"], name: "index_comments_on_commenter_id", using: :btree
-
-  create_table "posts", force: true do |t|
-    t.string "title", null: false
-    t.text   "body",  null: false
-  end
-
-  add_index "posts", ["body"], name: "index_posts_on_body", using: :btree
-  add_index "posts", ["title"], name: "index_posts_on_title", using: :btree
 
   create_table "questions", force: true do |t|
     t.integer "author_id", null: false
@@ -55,8 +47,8 @@ ActiveRecord::Schema.define(version: 20150402204735) do
   add_index "responses", ["question_id"], name: "index_responses_on_question_id", using: :btree
 
   create_table "tag_assignments", force: true do |t|
-    t.integer "taggable_id",   null: false
-    t.string  "taggable_type", null: false
+    t.integer "taggable_id"
+    t.string  "taggable_type"
     t.integer "tag_id",        null: false
   end
 
@@ -81,8 +73,8 @@ ActiveRecord::Schema.define(version: 20150402204735) do
   add_index "users", ["session_token"], name: "index_users_on_session_token", unique: true, using: :btree
 
   create_table "votes", force: true do |t|
-    t.integer "voteable_id",   null: false
-    t.string  "voteable_type", null: false
+    t.integer "voteable_id"
+    t.string  "voteable_type"
     t.integer "voter_id",      null: false
     t.boolean "upvoted",       null: false
   end

@@ -6,16 +6,24 @@
 
   <div class="vote">
     <div class="vote-arrow">
-      <%= link_to(create_vote_question_url(@question, vote: { upvoted: true }), method: :post) do %>
+      <% if @author_is_current_user %>
         <i class="fa fa-long-arrow-up fa-2x"></i>
+      <% else %>
+        <%= link_to(create_vote_question_url(@question, vote: { upvoted: true }), method: :post) do %>
+          <i class="fa fa-long-arrow-up fa-2x"></i>
+        <% end %>
       <% end %>
     </div>
 
     <p class="vote-rating"><%= @question.upvoters.length - @question.downvoters.length %></p>
 
     <div class="vote-arrow">
-      <%= link_to(create_vote_question_url(@question, vote: { upvoted: false }), method: :post) do %>
+      <% if @author_is_current_user %>
         <i class="fa fa-long-arrow-down fa-2x"></i>
+      <% else %>
+        <%= link_to(create_vote_question_url(@question, vote: { upvoted: false }), method: :post) do %>
+          <i class="fa fa-long-arrow-down fa-2x"></i>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -27,14 +35,17 @@
       <% @question.tags.each do |tag| %>
         <li>
           <span class="label label-success">
-            <%= link_to tag.name, tag_url(tag) %> <%= link_to(destroy_tag_question_url(@question, tag_id: tag), method: :delete) do %>
-              <i class="fa fa-times tag-remove-mark"></i>
+            <%= link_to tag.name, tag_url(tag) %>
+            <% if @author_is_current_user %>
+              <%= link_to(destroy_tag_question_url(@question, tag_id: tag), method: :delete) do %>
+                <i class="fa fa-times tag-remove-mark"></i>
+              <% end %>
             <% end %>
           </span>
         </li>
       <% end %>
 
-      <% if @question.tags.length < 5 %>
+      <% if @question.tags.length < 5 && @author_is_current_user %>
         <li class="tag-form">
           <%= form_tag(create_tags_question_url(@question), method: :post) do %>
             <%= label_tag :tag_tag_names, "Tag Name", class: 'sr-only' %>
@@ -46,11 +57,12 @@
     </ul>
   </div>
 
-  <h4>Add a Response</h4>
-
-  <%= form_tag(question_responses_url(@question), method: :post) do %>
-    <%= text_area :response, :body, class: 'form-control', value: "" %>
-    <%= submit_tag("Add Response", class: 'btn btn-md btn-primary') %>
+  <% unless @author_is_current_user %>
+    <h4>Add a Response</h4>
+    <%= form_tag(question_responses_url(@question), method: :post) do %>
+      <%= text_area :response, :body, class: 'form-control', value: "" %>
+      <%= submit_tag("Add Response", class: 'btn btn-md btn-primary') %>
+    <% end %>
   <% end %>
 
   <h4>
@@ -84,9 +96,12 @@
 
         <div class="response-body">
           <p class="response-text"><%= response.body %></p>
-          <p>Answered by <%= link_to response.author.name, user_url(response.author) %>
-            <%= link_to(question_response_url(@question, response), method: :delete) do %>
-              Delete <i class="fa fa-times tag-remove-mark"></i>
+          <p>
+            Answered by <%= link_to response.author.name, user_url(response.author) %>
+            <% if response.author == current_user %>
+              <%= link_to(question_response_url(@question, response), method: :delete) do %>
+                Delete <i class="fa fa-times tag-remove-mark"></i>
+              <% end %>
             <% end %>
           </p>
         </div>
