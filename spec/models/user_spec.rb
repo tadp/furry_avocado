@@ -71,7 +71,7 @@ describe User, type: :model do
 
     context 'when given valid user credentials' do
       it 'returns the associated User' do
-        found_user = User.find_by_credentials('charlessleasman@example.com', 'charlessleasman')
+        found_user = User.find_by_credentials('charlesxavier@example.com', 'charlesxavier')
         expect(found_user).to eq(@user)
       end
     end

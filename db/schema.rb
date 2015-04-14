@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20150402204735) do
 
   create_table "users", force: true do |t|
     t.string "name",            null: false
+    t.string "username",        null: false
     t.string "email",           null: false
     t.string "password_digest", null: false
     t.string "session_token",   null: false
@@ -71,6 +72,7 @@ ActiveRecord::Schema.define(version: 20150402204735) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["session_token"], name: "index_users_on_session_token", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "votes", force: true do |t|
     t.integer "voteable_id"

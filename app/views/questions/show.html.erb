@@ -1,7 +1,7 @@
 <div class="container">  
   <div class="question-header">
     <h2><%= @question.title %></h2>
-    <p>Asked by <%= link_to @question.author.name, user_url(@question.author) %></p>
+    <p>Asked by <%= link_to @question.author.username, user_url(@question.author) %></p>
   </div>
 
   <div class="vote">
@@ -97,7 +97,7 @@
         <div class="response-body">
           <p class="response-text"><%= response.body %></p>
           <p>
-            Answered by <%= link_to response.author.name, user_url(response.author) %>
+            Answered by <%= link_to response.author.username, user_url(response.author) %>
             <% if response.author == current_user %>
               <%= link_to(question_response_url(@question, response), method: :delete) do %>
                 Delete <i class="fa fa-times tag-remove-mark"></i>
