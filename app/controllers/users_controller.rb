@@ -11,7 +11,11 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    if signed_in?
+      redirect_to user_url(current_user)
+    else
+      @user = User.new
+    end
   end
 
   def show
@@ -21,6 +25,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password)
+    params.require(:user).permit(:name, :email, :username, :password)
   end
 end

@@ -1,55 +1,111 @@
-<h1><%= @question.title %></h1>
-<p><%= @question.body %></p>
+<div class="container">  
+  <div class="question-header">
+    <h2><%= @question.title %></h2>
+    <p>Asked by <%= link_to @question.author.username, user_url(@question.author) %></p>
+  </div>
 
-Vote Rating: <%= @question.upvoters.length - @question.downvoters.length %>
+  <div class="vote question-vote">
+    <div class="vote-arrow">
+      <% if @author_is_current_user %>
+        <i class="fa fa-chevron-circle-up fa-lg"></i>
+      <% else %>
+        <%= link_to(create_vote_question_url(@question, vote: { upvoted: true }), method: :post) do %>
+          <i class="fa fa-chevron-circle-up fa-lg"></i>
+        <% end %>
+      <% end %>
+    </div>
 
-<br>
+    <p class="vote-rating"><%= @question.upvoters.length - @question.downvoters.length %></p>
 
-<%= link_to "Upvote", create_vote_question_url(@question, vote: { upvoted: true }), method: :post %>
-<%= link_to "Downvote", create_vote_question_url(@question, vote: { upvoted: false }), method: :post %>
+    <div class="vote-arrow">
+      <% if @author_is_current_user %>
+        <i class="fa fa-chevron-circle-down fa-lg"></i>
+      <% else %>
+        <%= link_to(create_vote_question_url(@question, vote: { upvoted: false }), method: :post) do %>
+          <i class="fa fa-chevron-circle-down fa-lg"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 
-<br>
+  <div class="question-body">
+    <p class="question-text"><%= @question.body %></p>
 
-Tags:
+    <ul class="tag-list">
+      <% @question.tags.each do |tag| %>
+        <li>
+          <span class="label label-success">
+            <%= link_to tag.name, tag_url(tag) %>
+            <% if @author_is_current_user %>
+              <%= link_to(destroy_tag_question_url(@question, tag_id: tag), method: :delete) do %>
+                <i class="fa fa-times tag-remove-mark"></i>
+              <% end %>
+            <% end %>
+          </span>
+        </li>
+      <% end %>
 
-<ul>
-  <% @question.tags.each do |tag| %>
-    <li><%= link_to tag.name, tag_url(tag) %> <%= link_to "Remove", destroy_tag_question_url(@question, tag_id: tag), method: :delete %></li>
+      <% if @question.tags.length < 5 && @author_is_current_user %>
+        <li class="tag-form">
+          <%= form_tag(create_tags_question_url(@question), method: :post) do %>
+            <%= label_tag :tag_tag_names, "Tag Name", class: 'sr-only' %>
+            <%= text_field :tag, :tag_names, placeholder: 'Add Tags' %>
+            <%= submit_tag("Add Tag", class: 'btn btn-xs btn-default') %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% unless @author_is_current_user %>
+    <h4>Add a Response</h4>
+    <%= form_tag(question_responses_url(@question), method: :post) do %>
+      <%= text_area :response, :body, class: 'form-control', value: "" %>
+      <%= submit_tag("Add Response", class: 'btn btn-md btn-primary') %>
+    <% end %>
   <% end %>
-</ul>
 
-<% if @question.tags.length < 5 %>
-  <%= form_tag(create_tags_question_url(@question), method: :post) do %>
-    <%= label_tag :tag_tag_names, "Tag Name" %>
-    <%= text_field :tag, :tag_names %>
-    <%= submit_tag("Add Tag") %>
-  <% end %>
-<% end %>
+  <h4>
+    <%= @question.responses.length %>
+    
+    <% if @question.responses.length != 1 %>
+      Responses
+    <% else %>
+      Response
+    <% end %>
+  </h4>
 
-<br>
+  <ul class="response-list">
+    <% @question.responses.each do |response| %>
+      <li>
+        <div class="vote response-vote">
+          <div class="vote-arrow">
+            <%= link_to(create_vote_question_response_url(@question, response, vote: { upvoted: true }), method: :post) do %>
+              <i class="fa fa-chevron-circle-up fa-lg"></i>
+            <% end %>
+          </div>
 
-Add a response:
+          <p class="vote-rating"><%= response.upvoters.length - response.downvoters.length %></p>
 
-  <%= form_tag(question_responses_url(@question), method: :post) do %>
-    <%= text_area :response, :body, value: "" %>
-    <%= submit_tag("Add Response") %>
-  <% end %>
+          <div class="vote-arrow">
+            <%= link_to(create_vote_question_response_url(@question, response, vote: { upvoted: false }), method: :post) do %>
+              <i class="fa fa-chevron-circle-down fa-lg"></i>
+            <% end %>
+          </div>
+        </div>
 
-Responses:
-
-<ul>
-  <% @question.responses.each do |response| %>
-    <li>
-      <%= response.upvoters.length - response.downvoters.length %>
-
-      <%= link_to "Upvote", create_vote_question_response_url(@question, response, vote: { upvoted: true }), method: :post %>
-      <%= link_to "Downvote", create_vote_question_response_url(@question, response, vote: { upvoted: false }), method: :post %>
-
-      <br>
-      <%= response.author.name %>
-      <br>
-      <%= response.body %>
-      <%= link_to "Delete", question_response_url(@question, response), method: :delete %>
-    </li>
-  <% end %>
-</ul>
+        <div class="response-body">
+          <p class="response-text"><%= response.body %></p>
+          <p>
+            Answered by <%= link_to response.author.username, user_url(response.author) %>
+            <% if response.author == current_user %>
+              <%= link_to(question_response_url(@question, response), method: :delete) do %>
+                Delete <i class="fa fa-times tag-remove-mark"></i>
+              <% end %>
+            <% end %>
+          </p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -12,8 +12,8 @@
 class User < ActiveRecord::Base
   before_validation :ensure_session_token
 
-  validates :name, :email, :password_digest, :session_token, presence: true
-  validates :email, :session_token, uniqueness: true
+  validates :name, :username, :email, :password_digest, :session_token, presence: true
+  validates :email, :username, :session_token, uniqueness: true
   validates :password, length: { minimum: 8, allow_nil: true }
 
   has_many(

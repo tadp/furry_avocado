@@ -1,11 +1,15 @@
-<%= form_for @question do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title, placeholder: "What's your question?" %>
-  <%= f.label :body %>
-  <%= f.text_area :body %>
+<div class='container'>
+  <%= form_for @question, html: { class: 'form-sign' } do |f| %>
+    <h2 class='form-sign-heading'>Ask a Question</h2>
+    <%= f.label :title, class: 'sr-only' %>
+    <%= f.text_field :title, class: 'form-control', placeholder: "What's your question? Be specific." %>
 
-  <%= f.label :tag_names %>
-  <%= f.text_field :tag_names, value: '' %>
+    <%= f.label :body, class: 'sr-only' %>
+    <%= f.text_area :body, class: 'form-control', placeholder: 'Explain the context of your question.' %>
 
-  <%= f.submit 'Post Your Question' %>
-<% end %>
+    <%= label_tag(:tag_tag_names, 'Tags', class: 'sr-only') %>
+    <%= text_field(:tag, :tag_names, class: 'form-control', placeholder: 'Add up to 5 tags.') %>
+
+    <%= f.submit 'Post Your Question', class: 'btn btn-lg btn-primary btn-block' %>
+  <% end %>
+</div>

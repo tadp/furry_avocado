@@ -75,7 +75,7 @@ describe SessionsController, type: :controller do
     end
 
     it 'finds the User associated with the current session' do
-      expect(assigns :user).to eq(@user)
+      expect(assigns :current_user).to eq(@user)
     end
 
     it 'resets the session token of the current User' do

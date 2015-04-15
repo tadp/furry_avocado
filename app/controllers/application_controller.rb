@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :sign_in!, :sign_out!, :signed_in?, :ensure_current_user
 
   def current_user
-    @user ||= User.find_by_session_token(session[:session_token])
+    @current_user ||= User.find_by_session_token(session[:session_token])
   end
 
   def sign_in(user)
