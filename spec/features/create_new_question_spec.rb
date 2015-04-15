@@ -13,6 +13,8 @@ feature 'User visits new question page' do
     expect(page).to have_selector("label[for='question_title']")
     expect(page).to have_selector("textarea[name='question[body]']")
     expect(page).to have_selector("label[for='question_body']")
+    expect(page).to have_selector("input[name='tag[tag_names]']")
+    expect(page).to have_selector("label[for='tag_tag_names']")
     expect(page).to have_button('Post Your Question')
   end
 
@@ -36,12 +38,14 @@ feature 'User creates new question' do
 
   scenario 'successfully' do
     fill_in 'question[body]', with: "Baby, don't hurt me"
+    fill_in 'tag[tag_names]', with: "No more"
     click_button 'Post Your Question'
 
     expect(page).to have_css('h2', text: 'What is love?')
     expect(page).to have_css('p', text: "Baby, don't hurt me")
+    expect(page).to have_css('li', text: 'No')
+    expect(page).to have_css('li', text: 'more')
   end
-
 
   scenario 'unsuccessfully' do
     click_button 'Post Your Question'
